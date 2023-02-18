@@ -10,7 +10,6 @@ public class DAOUtility {
         JsonArray records = new JsonArray();
         
         try {
-        
             if (rs != null) {
 
                 // INSERT YOUR CODE HERE
