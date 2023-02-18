@@ -17,19 +17,10 @@ public class Main {
         
         if ( !daoFactory.isClosed() ) {
             System.out.println("Connected Successfully!");
-        
-            //System.out.println(sectionDAO.find(1, subid, num));
-            //System.out.println(registrationDAO.create(1, 1, 21228));
-            //System.out.println(registrationDAO.create(1, 1, 21224));
-            //System.out.println(registrationDAO.create(1, 1, 21236));
-            for (int i =0; i < crns.length; i++) {
-                registrationDAO.create(1, 1, crns[i]);
-            }
             //System.out.println(registrationDAO.create(1, 1, 21233));
             System.out.println(registrationDAO.delete(studentid, termid));
         }
     }
 }
-
 
 // date and time is not serializable
