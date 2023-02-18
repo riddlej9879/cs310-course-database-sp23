@@ -51,5 +51,4 @@ public final class DAOFactory {
     public StudentDAO getStudentDAO() {
         return new StudentDAO(this);
     }
-    
 }

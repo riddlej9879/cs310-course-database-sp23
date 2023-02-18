@@ -7,7 +7,8 @@ import com.github.cliftonlabs.json_simple.*;
 
 public class CourseRegistrationDatabaseTest {
 
-    private static final String USERNAME = "jsnellen"; // replace this with your own account name!
+    private static final String USERNAME = "jriddle";
+    // Password = password;
     
     private DAOFactory daoFactory;
     private RegistrationDAO registrationDao;
@@ -40,9 +41,8 @@ public class CourseRegistrationDatabaseTest {
     
     @Test
     public void testRegisterSingle() {
-        
         try {
-        
+
             JsonArray r1 = (JsonArray)Jsoner.deserialize(s1);
 
             // clear schedule (withdraw all classes)
@@ -54,16 +54,14 @@ public class CourseRegistrationDatabaseTest {
             boolean result = registrationDao.create(studentid, DAOUtility.TERMID_SP23, 21098);
 
             // compare number of updated records
-
             assertTrue(result);
-
             // compare schedule
 
             assertEquals(r1, (JsonArray)Jsoner.deserialize(registrationDao.list(studentid, DAOUtility.TERMID_SP23)));
             
         }
-        catch (Exception e) { e.printStackTrace(); }
-        
+        catch (Exception e) { 
+            e.printStackTrace(); }
     }
     
     @Test
@@ -101,12 +99,10 @@ public class CourseRegistrationDatabaseTest {
             
         }
         catch (Exception e) { e.printStackTrace(); }
-        
     }
     
     @Test
     public void testDropSingle() {
-        
         try {
         
             JsonArray r3 = (JsonArray)Jsoner.deserialize(s3);
@@ -147,7 +143,7 @@ public class CourseRegistrationDatabaseTest {
         catch (Exception e) { e.printStackTrace(); }
         
     }
-    
+
     @Test
     public void testDropMultiple() {
         
@@ -289,5 +285,5 @@ public class CourseRegistrationDatabaseTest {
         catch (Exception e) { e.printStackTrace(); }
         
     }
-    
+
 }
