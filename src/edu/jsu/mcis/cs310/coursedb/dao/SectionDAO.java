@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
-import com.github.cliftonlabs.json_simple.*;
-
 public class SectionDAO {
     // INSERT YOUR CODE HERE
     private static final String QUERY_SEARCH = "SELECT * FROM section "
@@ -20,11 +18,9 @@ public class SectionDAO {
     }
     
     public String find(int termid, String subjectid, String num) {
-        String result = "[Result]";
+        String result = "";
         PreparedStatement ps = null;
-        // ResultSet stores the SQL return values
         ResultSet rs = null;
-        // ResultSetMetaData can retrieve the column headers
         ResultSetMetaData rsmd = null;
         
         try {
@@ -32,21 +28,16 @@ public class SectionDAO {
             
             if (conn.isValid(0)) {
                 // INSERT YOUR CODE HERE
-                // conn.preparedStatement creates a query string
                 ps = conn.prepareStatement(QUERY_SEARCH);
-                // PreparedStatement.setXXX inserts values into query string
                 ps.setString(1, subjectid);
                 ps.setString(2, num);
                 
                 boolean hashresults = ps.execute();
                 if (hashresults) {
-                    JsonArray sql_data = new JsonArray();
-                    
                     rs = ps.getResultSet();
                     rsmd = rs.getMetaData();
-                    
                     while(rs.next()) {
-                        
+                        result += DAOUtility.getResultSetAsJson(rs);
                     }
                 }
             }
