@@ -7,22 +7,25 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
 public class RegistrationDAO {
-    private static final String QUERY_EXISTS = "SELECT ? FROM registration "
-            + "WHERE EXISTS (SELECT studentid FROM registration WHERE "
-            + "studentid = ? AND termid = ? AND crn = ?)";
     private static final String QUERY_REGISTER = "INSERT INTO registration "
             + "VALUES (?, ?, ?)";
     private static final String QUERY_DELETE_THREE_VALUES = "DELETE FROM "
             + "registration WHERE studentid = ? AND termid = ? AND crn = ?";
     private static final String QUERY_DELETE_TWO_VALUES = "DELETE FROM "
             + "registration WHERE studentid = ? AND termid = ?";
-    
+    private static final String QUERY_GET_REGISTRATION = "SELECT * FROM "
+            + "registration WHERE studentid = ? AND termid = ? ORDER BY crn";
+    private static final String QUERY_GET_LIST = "SELECT registration.*, "
+            + "section.* FROM registration INNER JOIN section on "
+            + "registration.crn=section.crn WHERE registration.studentid = ? "
+            + "AND registration.termid = ?";
+
     private final DAOFactory daoFactory;
-    
+
     RegistrationDAO(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
-    
+
     public boolean create(int studentid, int termid, int crn) {
         boolean result = false;
         PreparedStatement ps = null;
@@ -56,12 +59,10 @@ public class RegistrationDAO {
                 catch (Exception e) { e.printStackTrace(); }
             }
         }
-        System.out.println(result);
         return result;
     }
 
     public boolean delete(int studentid, int termid, int crn) {
-        System.out.println("delete");
         boolean result = false;
         PreparedStatement ps = null;
         
@@ -74,7 +75,6 @@ public class RegistrationDAO {
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
                 int updateCount = ps.executeUpdate();
-                System.out.println(updateCount);
                 if (updateCount > 0) {
                     result = true;
                 }
@@ -87,10 +87,9 @@ public class RegistrationDAO {
                 catch (Exception e) { e.printStackTrace(); }
             }
         }
-        System.out.println(result);
         return result;
     }
-    
+
     public boolean delete(int studentid, int termid) {
         boolean result = false;
         PreparedStatement ps = null;
@@ -120,7 +119,7 @@ public class RegistrationDAO {
     }
 
     public String list(int studentid, int termid) {
-        String result = null;
+        String result = "";
         PreparedStatement ps = null;
         ResultSet rs = null;
         ResultSetMetaData rsmd = null;
@@ -130,7 +129,13 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 // INSERT YOUR CODE HERE
-                
+                ps = conn.prepareStatement(QUERY_GET_REGISTRATION);
+                ps.setInt(1, studentid);
+                ps.setInt(2, termid);
+                boolean hashresult = ps.execute();
+                if (hashresult) {
+                    result = DAOUtility.getResultSetAsJson(ps.executeQuery());
+                }
             }
         }
         catch (Exception e) { e.printStackTrace(); }

@@ -38,7 +38,7 @@ public class CourseRegistrationDatabaseTest {
         studentid = daoFactory.getStudentDAO().find(USERNAME);
         
     }
-    
+
     @Test
     public void testRegisterSingle() {
         try {
@@ -63,7 +63,7 @@ public class CourseRegistrationDatabaseTest {
         catch (Exception e) { 
             e.printStackTrace(); }
     }
-    
+
     @Test
     public void testRegisterMultiple() {
         
@@ -100,7 +100,7 @@ public class CourseRegistrationDatabaseTest {
         }
         catch (Exception e) { e.printStackTrace(); }
     }
-    
+
     @Test
     public void testDropSingle() {
         try {
@@ -191,7 +191,7 @@ public class CourseRegistrationDatabaseTest {
         catch (Exception e) { e.printStackTrace(); }
         
     }
-    
+
     @Test
     public void testWithdraw() {
         
@@ -237,7 +237,7 @@ public class CourseRegistrationDatabaseTest {
         catch (Exception e) { e.printStackTrace(); }
         
     }
-    
+
     @Test
     public void testGetSections() {
         
